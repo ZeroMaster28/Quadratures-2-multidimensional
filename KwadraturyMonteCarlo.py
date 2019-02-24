@@ -76,6 +76,22 @@ def monteCarlo(przedzial, funkcja, m, n):
     return suma/n;
 
 
+def multivariate_uniform(a, b ,d):
+    return np.random.random(d)*(b-a)+a
+
+
+def monteCarloUniform(przedzial, funkcja, m, n):
+    """Bierzemy rozkład jednostajny na kostce [-3,3]^n"""
+
+    suma = 0
+    for i in range(1, n+1):
+        point = multivariate_uniform(przedzial[0][0],przedzial[1][0],m)
+        if included(przedzial, point):
+            suma = suma+(funkcja(point)*((przedzial[1][0]-przedzial[0][0])**m))
+
+    return suma/n;
+
+
 N1 = 100000
 
 # całkujemy na kostkach
@@ -114,9 +130,9 @@ def g4(x):
 # print("Otrzymano: ", montecarlo1D(delta, f1, N))
 # print("Oczekiwany wynik: 4+2/3")
 # print("Otrzymano:", montecarlo1D(delta, f2, N))
-#
+
 # ###############################################################
-# print("\n Przykład II (funkcja wielu zmiennych)")
+# print("\n Przykład II (funkcja wielu zmiennych) z użyciem wielowymiarowego normalnego")
 #
 # print("Liczba prób:", N1)
 # print("\ng1(x,y)=x*y", "\nOczekiwany wynik: 4")
@@ -129,4 +145,26 @@ def g4(x):
 # print("Otrzymano: ", monteCarlo(obszar3, g3, 10, N1))
 #
 # print("\ng4(x,y,z)=x+y*z", "\nOczekiwany wynik: 3/4")
-# print("Otrzymano: ", monteCarlo(obszar4, g4, 4, N1))
+# print("Otrzymano: ", monteCarloUniform(obszar4, g4, 4, N1))
+
+
+# ###############################################################
+print("\n Przykład III (poprawka drugiego) z użyciem wielowymiarowego jednostajnego")
+
+print("Liczba prób:", N1)
+print("\ng1(x,y)=x*y", "\nOczekiwany wynik: 4")
+print("Otrzymano: ", monteCarloUniform(obszar1, g1, 2, N1))
+
+print("\ng2(x,y,z,w)=x+y-z+w", "\nOczekiwany wynik: 0")
+print("Otrzymano: ", monteCarloUniform(obszar2, g2, 4, N1))
+
+print("\ng3(x1,...,x10)=x2+x3", "\nOczekiwany wynik: 1")
+print("Otrzymano: ", monteCarloUniform(obszar3, g3, 10, N1))
+
+print("\ng4(x,y,z)=x+y*z", "\nOczekiwany wynik: 3/4")
+print("Otrzymano: ", monteCarloUniform(obszar4, g4, 4, N1))
+
+
+
+
+
