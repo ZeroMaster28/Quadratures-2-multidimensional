@@ -10,3 +10,5 @@ Error, in fact, depends on what probability density function we use. However, fo
 
 Negative aspect of this method is brought by convergence which in this case is slower than for typical quadratures.
 Nevertheless, implementation is not complicated.
+
+This is a test.
